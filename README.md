@@ -1,4 +1,4 @@
-# Movie Review Project React Application
+# Movie Review React Application
 
 ## Summary: 
 - A React/NodeJS/MySQL app with a Landing page, a Review Movie page, a Search page, and a MyPage page

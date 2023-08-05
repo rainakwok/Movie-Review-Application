@@ -121,7 +121,7 @@ const Search = () =>{
                 <TextField
                   onChange={handleMovieField}
                   // type={type}
-                  placeholder="e.g. Black Panther"
+                  placeholder="e.g. Forrest Gump"
                   id="outlined-basic"
                   variant="outlined"
                   size="small"
@@ -142,7 +142,7 @@ const Search = () =>{
                 <TextField
                   onChange={handleActorField}
                   // type={type}
-                  placeholder="e.g. Chadwick Boseman"
+                  placeholder="e.g. Tom Hanks"
                   id="outlined-basic"
                   variant="outlined"
                   size="small"
@@ -163,7 +163,7 @@ const Search = () =>{
                 <TextField
                   onChange={handleDirectorField}
                   // type={type}
-                  placeholder="e.g. Ryan Coogler"
+                  placeholder="e.g. Robert Zemeckis"
                   variant="outlined"
                   size="small"
                   style={{ backgroundColor: 'white' }}
@@ -225,11 +225,6 @@ const MovieResult = (props) =>{
     }
   };
   console.log("Review data: "+JSON.stringify(reviewData));
-  console.log("Review data type: "+typeof(reviewData));
-  console.log("Review data 1: "+JSON.stringify(reviewData[0]));
-  console.log("Review data 1 type: "+typeof(reviewData[0]));
-  console.log("Review data 1 prop: "+JSON.stringify(reviewData[0].id));
-  console.log("Review data 1 prop type: "+typeof(reviewData[0].id));
   let movieInfo = reviewData[0];
   
 

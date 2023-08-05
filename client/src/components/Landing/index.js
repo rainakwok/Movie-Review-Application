@@ -1,9 +1,6 @@
 import React from 'react';
 import Typography from "@mui/material/Typography";
 import { Grid, Box } from '@mui/material';
-// import GuardiansImg from "../../images/GuardiansOfTheGalaxyVol3.jpg"
-// import TotoroImg from "../../images/MyNeighborTotoro.jpg"
-// import SpiderverseImg from "../images/Spiderverse2.jpg"
 
 import NavAppBar from '../Navigation';
 

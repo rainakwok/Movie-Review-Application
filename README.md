@@ -8,4 +8,4 @@
 - Landing page: Home page for the application and displays "trending" movies
 - Search page: Search for movies by title, actor and/or director from a MySQL database
 - Review page: Leave a review from a list of movies (from MySQL database)
-- MyPage [Incomplete]: Users' page where they can keep and edit a custom list of movies
+- MyPage: Users' page where they can keep and edit a list of Followed Actors

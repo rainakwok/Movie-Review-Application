@@ -1,12 +1,10 @@
 
 ## My Page Functionality Specification
 
-- The user will be able to create a custom list based on the movies in the system
-- The user will be able to rename this list
-- Each item in the list will consist of the movie title and can optionally contain the following:
-    - Custom tags
-    - Status (Dropped, To Watch, Watching, Completed)
-    - Notes
-- The user will be able to remove/add items to/from each list
-- The user will be able to edit each item in the list
-- The user will be able to clear their list
+- Each user will be able to create and add to their own Followed Actors list
+- The default user id is 1
+- A list of the actors that the user is following will be shown
+    - There is a dropdown feature for each actor, which will show the following:
+    - Names of the movie the actor has starred in
+    - The role of the actor in each movie
+- After adding an actor, a 'Refresh Page' link appears, that will update the information on the page once clicked

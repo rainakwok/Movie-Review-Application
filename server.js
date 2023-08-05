@@ -128,8 +128,9 @@ app.post('/api/searchMovies', (req, res) => {
 		data[4] = '%'
 		sqlExtra[4] = `AND D.last_name LIKE ?`;
 	}
+	console.log("newData: " + data);
+	console.log("sqlExtra: " + sqlExtra);
 
-	// New sql
 	let sql = `SELECT main.movie, main.id, directorName,
     	reviewContent, reviewTitle, main.userID, main.reviewID, avgScore
 		FROM
@@ -152,32 +153,6 @@ app.post('/api/searchMovies', (req, res) => {
 			FROM review R RIGHT OUTER JOIN movies M ON M.id = R.movie_id
 			GROUP BY M.id, R.reviewID) score
 		ON score_reviewID = main.reviewId`;
-
-	// // Old sql
-	// let sql = `SELECT M.name AS movie, CONCAT(D.first_name, ' ', D.last_name) AS directorName, 
-	// 	newR.reviewContent, newR.reviewTitle, newR.userID, newR.reviewID, score.avgScore 
-	// 	FROM movies M, actors A, directors D, movies_directors MD, roles MA, 
-	// 		(SELECT M.id, R.reviewContent, R.reviewTitle, R.reviewScore, R.userID, R.reviewID
-	// 		FROM review R RIGHT OUTER JOIN movies M ON M.id = R.movie_id) AS newR, 
-	// 		(SELECT M.id, AVG(R.reviewScore) AS avgScore
-	// 		FROM review R RIGHT OUTER JOIN movies M ON M.id = R.movie_id
-	// 		GROUP BY M.id) score `
-	// 	+ sqlExtra.join(' ') +
-	// 	` AND newR.id = M.id
-	// 	AND score.id = M.id
-	// 	AND MD.movie_id = M.id
-	// 	AND MD.director_id = D.id
-	// 	AND MA.actor_id = A.id
-	// 	AND MA.movie_id = M.id`;
-
-	// // oldest sql: without review data
-	// let sql = `SELECT M.name AS movie, CONCAT(D.first_name, ' ', D.last_name) AS directorName
-	// FROM movies M, actors A, directors D, movies_directors MD, roles MA `
-	// + sqlExtra.join(' ') +
-	// ` AND MD.movie_id = M.id
-	// AND MD.director_id = D.id
-	// AND MA.actor_id = A.id
-	// AND MA.movie_id = M.id`;
 	
 	console.log(sql);
 
@@ -193,6 +168,84 @@ app.post('/api/searchMovies', (req, res) => {
 	});
 	connection.end();
 });
+
+app.post('/api/loadAllActors', (req, res) => {
+
+	let connection = mysql.createConnection(config);
+
+	let sql = `SELECT CONCAT(first_name, " ", last_name) AS actorName FROM actors`;
+	console.log(sql);
+
+	connection.query(sql, (error, results, fields) => {
+		if (error) {
+			console.log("error!");
+			return console.error(error.message);
+		}
+
+		let string = JSON.stringify(results);
+		console.log("sending...");
+		res.send({ express: string });
+	});
+	connection.end();
+});
+
+app.post('/api/loadFollowedActors', (req, res) => {
+
+	let connection = mysql.createConnection(config);
+
+	let sql = `SELECT M.name AS movie, sub1.actorName, role
+		FROM movies M
+		RIGHT JOIN
+			(SELECT CONCAT(A.first_name, " ", A.last_name) AS actorName, role, movie_id
+			FROM actors A, roles MA, actors_users AU
+			WHERE A.id = MA.actor_id
+			AND A.id = AU.actor_id
+			AND AU.user_id = 1) sub1
+		ON M.id = sub1.movie_id`;
+
+	console.log(sql);
+
+	connection.query(sql, (error, results, fields) => {
+		if (error) {
+			console.log("error!");
+			return console.error(error.message);
+		}
+
+		let string = JSON.stringify(results);
+		console.log("sending the following results: " + results);
+		res.send({ express: string });
+	});
+	connection.end();
+});
+
+
+app.post('/api/addFollowedActors', (req, res) => {
+
+    const { userID, actorName} = req.body;
+	let data = [userID, actorName];
+
+	let connection = mysql.createConnection(config);
+	let sql = `INSERT INTO actors_users (user_id, actor_id)
+		VALUES (?, 
+			(SELECT id FROM actors A
+			WHERE CONCAT(first_name, " ", last_name) = ?)
+		)`;
+
+	console.log(sql);
+
+	connection.query(sql, data, (error, results, fields) => {
+		if (error) {
+			console.log("error!");
+			return console.error(error.message);
+		}
+
+		let string = JSON.stringify(results);
+		console.log("sending...");
+		res.send({ express: string });
+	});
+	connection.end();
+});
+
 
 app.listen(port, () => console.log(`Listening on port ${port}`)); //for the dev version
 //app.listen(port, '172.31.31.77'); //for the deployed version, specify the IP address of the server

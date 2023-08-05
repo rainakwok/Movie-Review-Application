@@ -21,15 +21,9 @@ const ReviewTitle = (props) => {
         onChange={(e) => props.updateTitle(e.target.value)}
       />
       {(props.showMessage == -1 && !props.enteredTitle)
-        ?
+        &&
         <Typography variant="caption" color="error">
           Enter your review title
-        </Typography>
-        : 
-        (props.showMessage == 1 && props.enteredTitle)
-        &&
-        <Typography variant="caption" color="secondary">
-          Your review has been received
         </Typography>
       }
     </>

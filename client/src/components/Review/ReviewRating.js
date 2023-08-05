@@ -27,15 +27,9 @@ const ReviewRating = (props) => {
           <FormControlLabel value={5} control={<Radio />} label="5" />
         </RadioGroup>
         {(props.showMessage == -1 && props.selectedRating == 0)
-          ?
+          &&
           <Typography variant="caption" color="error">
             Select the rating
-          </Typography>
-          : 
-          (props.showMessage == 1 && props.selectedRating != 0)
-          &&
-          <Typography variant="caption" color="secondary">
-            Your review has been received
           </Typography>
         }
       </FormControl>

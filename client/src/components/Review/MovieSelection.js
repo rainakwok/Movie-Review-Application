@@ -23,15 +23,9 @@ const MovieSelection = (props) => {
         })}
       </Select>
       {(props.showMessage == -1 && !props.selectedMovie)
-        ?
+        &&
         <Typography variant="caption" color="error">
           Select your movie
-        </Typography>
-        : 
-        (props.showMessage == 1 && props.selectedMovie)
-        &&
-        <Typography variant="caption" color="secondary">
-          Your review has been received
         </Typography>
       }
     </FormControl>

@@ -27,15 +27,9 @@ const ReviewBody = (props) => {
         onChange={(e) => props.updateReview(e.target.value)}
       />      
       {(props.showMessage == -1 && !props.enteredReview)
-        ?
+        &&
         <Typography variant="caption" color="error">
           Enter your review
-        </Typography>
-        : 
-        (props.showMessage == 1 && props.enteredReview)
-        &&
-        <Typography variant="caption" color="secondary">
-          Your review has been received
         </Typography>
       }
     </>

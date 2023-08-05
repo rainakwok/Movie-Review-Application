@@ -247,6 +247,14 @@ const Review = () => {
                     Submit
                   </Button>
                 }
+                {(showMessage == 1)
+                  &&
+                  <Grid item>
+                    <Typography variant="caption" color="secondary">
+                      Your review has been received
+                    </Typography>
+                  </Grid>
+                }
               </Grid>            
             </Grid>
           </Grid>

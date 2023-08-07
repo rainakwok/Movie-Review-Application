@@ -24,24 +24,38 @@ const MyPage = () =>{
   React.useEffect(() => {
     loadAllActors();
     loadFollowedActors();
-
-    var tempOpenArr = [];    
-    for (var i = 0; i < followList.length; i++){
-      setOpenToggle(tempOpenArr.push(false));
-    }
-    console.log("openToggle [0]: " + openToggle[0]);
   }, []) 
 
   const setFollowing = (info) => {
-    var tempList = [];
-    if (typeof(info) == "string"){
-      tempList = followList;
-      tempList.push(info);
-    } else {
-      tempList = Array.from(new Set(info.map(obj => obj.actorName)));
-    }
-    updateFollowList(tempList);
-    console.log("Updated Followed Actors list: ", tempList);    
+    // Set following
+    const setupFollow = new Promise((resolve) => {
+
+      var tempList = [];
+      if (typeof(info) == "string"){
+        tempList = followList;
+        tempList.push(info);
+      } else {
+        tempList = Array.from(new Set(info.map(obj => obj.actorName)));
+      }
+      updateFollowList(tempList);
+      console.log("Updated Followed Actors list: ", tempList); 
+
+      resolve(tempList.length);
+  
+    });
+    
+    setupFollow.then((len) => {
+
+      // Update toggle states
+      console.log("Follow list length: " + len);
+      const tempOpenArr = [];
+      for (var i = 0; i < len; i++){
+        tempOpenArr.push(false);
+      }
+      setOpenToggle(tempOpenArr);
+      console.log("openToggle arr: " + tempOpenArr);
+      
+    })
   }
 
   const loadFollowedActors = () => {
@@ -77,11 +91,10 @@ const MyPage = () =>{
     
     callApiAddFollowedActors()
       .then(res => {
+
         console.log("callApiAddFollowedActors returned: ", res)
         var parsed = JSON.parse(res.express);
         console.log("callApiAddFollowedActors parsed: ", parsed);
-        
-        setOpenToggle(openToggle.push(false));
       })
   }
 
@@ -135,7 +148,7 @@ const MyPage = () =>{
   }
 
   const handleList = (index) => {
-    var tempOpenToggle = {...openToggle};
+    const tempOpenToggle = [...openToggle];
     console.log(tempOpenToggle[index]);
     tempOpenToggle[index] = !tempOpenToggle[index];
     console.log(tempOpenToggle[index]);

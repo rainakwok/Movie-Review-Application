@@ -30,11 +30,11 @@ const FollowActorForm = (props) => {
         setShowMessage(1);
       } else {
         setShowMessage(-1);
+        setTimeout(() => {
+          setShowMessage(0);
+          setSelectedActor('');
+        }, 3000);
       }
-      setTimeout(() => {
-        setShowMessage(0);
-        setSelectedActor('');
-      }, 3000);
       console.log("showMessage set to: " + showMessage);
     }
   };

@@ -2,8 +2,9 @@ import * as React from 'react';
 import Typography from "@mui/material/Typography";
 import { Grid, Box, styled } from '@mui/material';
 import { List, ListItem, ListItemText, ListItemButton, Collapse } from '@mui/material';
-import FollowActorForm from './FollowActorForm';
+// import DeleteIcon from '@mui/icons-material/Delete';
 
+import FollowActorForm from './FollowActorForm';
 import NavAppBar from '../Navigation';
 
 const serverURL = "";
